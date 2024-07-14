@@ -7,97 +7,97 @@
 #sudo apt update
 #sudo apt full-upgrade
 #sudo raspi-config
-
-import busio
-import digitalio
-import board
-import adafruit_mcp3xxx.mcp3008 as MCP
-from adafruit_mcp3xxx.analog_in import AnalogIn
-from time import sleep
-import smbus #For the LCD I2C
-import time
-import pyrebase
-
-config = {
-  "apiKey": "AIzaSyDCqcwzV_yQtJU2VTd0Gyut4p2Ntls5uts",
-  "authDomain": "sis-sus.firebaseapp.com",
-  "databaseURL": "https://sis-sus-default-rtdb.firebaseio.com",
-  "projectId": "sis-sus",
-  "storageBucket": "sis-sus.appspot.com",
-  "messagingSenderId": "950036547603",
-  "appId": "1:950036547603:web:636444af73e7d0b9f057e6",
-  "measurementId": "G-Y3TX0QTEKJ"
-}
-
-firebase = pyrebase.initialize_app(config)
-db = firebase.database()
-
-# Import LCD library and functions
+#source venv/bin/activate
+# Import library and functions
+import serial
+import keyboard
 from RPLCD.i2c import CharLCD
+import RPi.GPIO as GPIO
+import time
+import glob
+import os
+import gradio as gr
 
-def read_adc(channel):
-    adc = spi.xfer2([1, (8 + channel) << 4, 0])
-    data = ((adc[1] & 3) << 8) + adc[2]
-    return data
+def read_temp_raw():
+    f = open(device_file, 'r')
+    lines = f.readlines()
+    f.close()
+    return lines
 
-def loop():
-    for i in range(10):
-        ph_buf[i] = analog_in_pH.voltage
-        tds_buf[i] = analog_in_tds.voltage  # Read TDS sensor
-        delay(30)
+def read_temp():
+    lines = read_temp_raw()
+    temp_c=0
+    temp_f=0
+    while lines[0].strip()[-3:] != 'YES':
+        time.sleep(0.1)
+        lines = read_temp_raw()
+    equals_pos = lines[1].find('t=')
+    if equals_pos != -1:
+        temp_string = lines[1][equals_pos+2:]
+        temp_c = float(temp_string) / 1000.0
+        temp_f = temp_c * 9.0 / 5.0 + 32.0
+    return temp_c
+    
+#define static var
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(18, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+os.system('modprobe w1-gpio')
+os.system('modprobe w1-therm')
+base_dir = '/sys/bus/w1/devices/'
+device_folder = glob.glob(base_dir + '28*')[0]
+device_file = device_folder + '/w1_slave'
+lcd = CharLCD('PCF8574', 0x27)
+global temp,turbidity,Tds
+stopCode=False
+try:
+    arduino = serial.Serial(port='/dev/ttyUSB0', baudrate=9600, timeout=.1) #edit serial port here
+except Exception:
+    raise Exception("port incorrect or not connected. Try ls /dev/tty* to search for ports.")
 
-    ph_buf.sort()   # Sort pH buffer
-    tds_buf.sort()  # Sort TDS buffer as well
+def stop():
+    global stopCode
+    stopCode=True
+    return "Stopped"
 
-    avgValue = sum(ph_buf[2:8]) / 6  # Calculate average pH value
-    tds_avg = sum(tds_buf[2:8]) / 6  # Calculate average TDS value
-
-    phValue = (float(avgValue) - 0) * (14 - 0) / (5 - 0) + 0
-    phValue = round(phValue, 2)
-    print(f"pH sensor = {phValue:.2f}")
-    db.child("rasp3").update({"ph":phValue})
-
-    tdsValue = (tds_avg - 0) * (2000 - 0) / (5 - 0) + 0
-    tdsValue = round(tdsValue, 2)
-    print(f"TDS sensor = {tdsValue:.2f}")
-    db.child("rasp3").update({"tds":tdsValue})
-
-    # Update LCD with pH and TDS values
-    lcd.clear()
-    lcd.write_string(f"pH: {phValue:.2f}            TDS: {tdsValue:.2f}")
-
-    delay(500)
-
-def delay(ms):
-    time.sleep(ms / 1000.0)
-
+def run():
+    x=0
+    Tds=0
+    turbidity=0
+    temp=0
+    while True:
+        #temperature
+        temp = read_temp()
+        val=f"temp: {temp}"
+        lcd.clear()
+        lcd.write_string(val)
+        #TDS and turbidity
+        data = arduino.readline()
+        print(data)
+        data=data.decode()
+        if data:
+            if x==0:
+                x=1
+                turbidity= data #turbid
+            else:
+                x=0
+                Tds = data #tds
+        yield f"Temperature: {temp}. Turbidity: {turbidity}Total dissolved solid: {Tds}"
+        if stopCode==True:
+            time.sleep(0.3)
+            print("terminated")
+            break
+        
 #=================================================================================
 
-calibration = 0.00  # pH calibration
-tds_calibration = 1.23  # TDS calibration factor
-ph_buf = [0] * 10
-tds_buf = [0] * 10
+with gr.Blocks() as demo:
+    btn1 = gr.Button(value="run")
+    btn2 = gr.Button(value="stop")
+    display = gr.Textbox(value="",label="Outputs")
+    btn1.click(fn=run,outputs=display)
+    btn2.click(fn=stop,outputs=display)
+
+demo.launch()
 
 
-# Initialize MCP3008 ADC
-spi = busio.SPI(clock=board.SCK, MISO=board.MISO, MOSI=board.MOSI)
-cs = digitalio.DigitalInOut(board.D8)
-mcp = MCP.MCP3008(spi, cs)
-
-# Initialize analog input object for pH sensor connected to channel 0
-analog_in_pH = AnalogIn(mcp, MCP.P0)  # Use channel 0 for pH sensor
-analog_in_tds = AnalogIn(mcp, MCP.P1)  # Use channel 1 for tds sensor
-
-# Initialize LCD on I2C bus
-lcd = CharLCD('PCF8574', 0x27)
-
-try:
-    while True:
-        loop()
-        sleep(0.1)
-except KeyboardInterrupt:
-    pass
-finally:
-    pass
 
 
