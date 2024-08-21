@@ -97,7 +97,3 @@ with gr.Blocks() as demo:
     btn2.click(fn=stop,outputs=display)
 
 demo.launch()
-
-
-
-
