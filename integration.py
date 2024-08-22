@@ -6,7 +6,7 @@ import serial
 global mouseX,mouseY
 mouseX, mouseY=(0, 0)
 arduino = serial.Serial('COM3', 9600)
-arduinoMega = serial.Serial('COM4', 9600)
+# arduinoMega = serial.Serial('COM4', 9600) #arduino mega communication
 def write(mouseX,mouseY):
     resolution = (120,120)
     print(mouseX/resolution[0]*180)
@@ -14,7 +14,8 @@ def write(mouseX,mouseY):
     arduino.write(str(f"X{mouseX/resolution[1]*180}Y{mouseY/resolution[0]*180}").encode()) #set resolution
 
 def writeCoordsIntoMega(x,y):
-    arduino.write(str(f"{x}{y}").encode()) 
+    print(f"{y}{x}")
+    arduino.write(f"{y}{x}".encode()) 
 
 #setup board
 board_size_cm = 120
@@ -75,6 +76,9 @@ def onclick(event):
             if state:
                 button.set_facecolor('white')
                 buttons[buttons.index((button, pos, state))] = (button, pos, False)
+                sendX=int(((pos[0]-10)/20)+1)
+                sendY=int((6-(((pos[1]-10)/20)+1))+1)
+                writeCoordsIntoMega(x=sendX,y=sendY)
                 score += 1
                 update_display()
                 fig.canvas.draw_idle()
