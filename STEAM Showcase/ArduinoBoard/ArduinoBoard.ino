@@ -1,4 +1,4 @@
-String serialData;
+String seData;
 
 void setup(){
   Serial.begin(115200);
@@ -50,86 +50,88 @@ int switch1, switch2, switch3, switch4, switch5, switch6, switch7, switch8, swit
 switch17, switch18, switch19, switch20, switch21, switch22, switch23, switch24, switch25, switch26, switch27, switch28, switch29, switch30, switch31, switch32, switch33, switch34, switch35, switch36 = 0;
 
 void serialEvent() {
-  serialData = Serial.readString();
-  if(serialData.toInt()==11){if(switch1==0){digitalWrite(26,HIGH); switch1=1;}else{digitalWrite(26,LOW); switch1=0;}}      
+  seData = Serial.readString(); 
+  for(int ind=0; ind<seData.length()-2;ind+=2){
+    String serialData=seData.substring(ind,ind+2);
+    if(serialData.toInt()==11){if(switch1==0){digitalWrite(26,HIGH); switch1=1;}else{digitalWrite(26,LOW); switch1=0;}}      
+    
+    if(serialData.toInt()==16){if(switch2==0){digitalWrite(27,HIGH); switch2=1;}else{digitalWrite(27,LOW); switch2=0;}}      
+    
+    if(serialData.toInt()==15){if(switch3==0){digitalWrite(24,HIGH); switch3=1;}else{digitalWrite(24,LOW); switch3=0;}}      
+    
+    if(serialData.toInt()==14){if(switch4==0){digitalWrite(25,HIGH); switch4=1;}else{digitalWrite(25,LOW); switch4=0;}}      
+    
+    if(serialData.toInt()==13){if(switch5==0){digitalWrite(22,HIGH); switch5=1;}else{digitalWrite(22,LOW); switch5=0;}}      
+    
+    if(serialData.toInt()==12){if(switch6==0){digitalWrite(23,HIGH); switch6=1;}else{digitalWrite(23,LOW); switch6=0;}}      
+    
+    if(serialData.toInt()==21){if(switch7==0){digitalWrite(32,HIGH); switch7=1;}else{digitalWrite(32,LOW); switch7=0;}}      
+    
+    if(serialData.toInt()==26){if(switch8==0){digitalWrite(33,HIGH); switch8=1;}else{digitalWrite(33,LOW); switch8=0;}}      
+    
+    if(serialData.toInt()==25){if(switch9==0){digitalWrite(30,HIGH); switch9=1;}else{digitalWrite(30,LOW); switch9=0;}}      
+    
+    if(serialData.toInt()==24){if(switch10==0){digitalWrite(31,HIGH); switch10=1;}else{digitalWrite(31,LOW); switch10=0;}}  
+    
+    if(serialData.toInt()==23){if(switch11==0){digitalWrite(28,HIGH); switch11=1;}else{digitalWrite(28,LOW); switch11=0;}}  
+    
+    if(serialData.toInt()==22){if(switch12==0){digitalWrite(29,HIGH); switch12=1;}else{digitalWrite(29,LOW); switch12=0;}}  
+    
+    if(serialData.toInt()==31){if(switch13==0){digitalWrite(38,HIGH); switch13=1;}else{digitalWrite(38,LOW); switch13=0;}}  
+    
+    if(serialData.toInt()==36){if(switch14==0){digitalWrite(39,HIGH); switch14=1;}else{digitalWrite(39,LOW); switch14=0;}}  
+    
+    if(serialData.toInt()==33){if(switch15==0){digitalWrite(34,HIGH); switch15=1;}else{digitalWrite(34,LOW); switch15=0;}}  
+    
+    if(serialData.toInt()==34){if(switch16==0){digitalWrite(37,HIGH); switch16=1;}else{digitalWrite(37,LOW); switch16=0;}}  
+    
+    if(serialData.toInt()==35){if(switch17==0){digitalWrite(36,HIGH); switch17=1;}else{digitalWrite(36,LOW); switch17=0;}}  
+    
+    if(serialData.toInt()==32){if(switch18==0){digitalWrite(35,HIGH); switch18=1;}else{digitalWrite(35,LOW); switch18=0;}}  
+    
+    if(serialData.toInt()==41){if(switch19==0){digitalWrite(44,HIGH); switch19=1;}else{digitalWrite(44,LOW); switch19=0;}}  
+    
+    if(serialData.toInt()==46){if(switch20==0){digitalWrite(45,HIGH); switch20=1;}else{digitalWrite(45,LOW); switch20=0;}}  
+    
+    if(serialData.toInt()==45){if(switch21==0){digitalWrite(42,HIGH); switch21=1;}else{digitalWrite(42,LOW); switch21=0;}}  
+    
+    if(serialData.toInt()==44){if(switch22==0){digitalWrite(43,HIGH); switch22=1;}else{digitalWrite(43,LOW); switch22=0;}}  
+    
+    if(serialData.toInt()==43){if(switch23==0){digitalWrite(40,HIGH); switch23=1;}else{digitalWrite(40,LOW); switch23=0;}}  
+    
+    if(serialData.toInt()==42){if(switch24==0){digitalWrite(41,HIGH); switch24=1;}else{digitalWrite(41,LOW); switch24=0;}}  
+    
+    if(serialData.toInt()==51){if(switch25==0){digitalWrite(50,HIGH); switch25=1;}else{digitalWrite(50,LOW); switch25=0;}}  
+    
+    if(serialData.toInt()==56){if(switch26==0){digitalWrite(51,HIGH); switch26=1;}else{digitalWrite(51,LOW); switch26=0;}}  
+    
+    if(serialData.toInt()==55){if(switch27==0){digitalWrite(48,HIGH); switch27=1;}else{digitalWrite(48,LOW); switch27=0;}}  
+    
+    if(serialData.toInt()==54){if(switch28==0){digitalWrite(49,HIGH); switch28=1;}else{digitalWrite(49,LOW); switch28=0;}}  
+    
+    if(serialData.toInt()==53){if(switch29==0){digitalWrite(46,HIGH); switch29=1;}else{digitalWrite(46,LOW); switch29=0;}}  
+    
+    if(serialData.toInt()==52){if(switch30==0){digitalWrite(47,HIGH); switch30=1;}else{digitalWrite(47,LOW); switch30=0;}}  
+    
+    if(serialData.toInt()==61){if(switch31==0){digitalWrite(4,HIGH); switch31=1;}else{digitalWrite(4,LOW); switch31=0;}}  
+    
+    if(serialData.toInt()==62){if(switch32==0){digitalWrite(9,HIGH); switch32=1;}else{digitalWrite(9,LOW); switch32=0;}}  
+    
+    if(serialData.toInt()==63){if(switch33==0){digitalWrite(8,HIGH); switch33=1;}else{digitalWrite(8,LOW); switch33=0;}}    
+    
+    if(serialData.toInt()==64){if(switch34==0){digitalWrite(7,HIGH); switch34=1;}else{digitalWrite(7,LOW); switch34=0;}}    
+    
+    if(serialData.toInt()==65){if(switch35==0){digitalWrite(6,HIGH); switch35=1;}else{digitalWrite(6,LOW); switch35=0;}}    
+    
+    if(serialData.toInt()==66){if(switch36==0){digitalWrite(5,HIGH); switch36=1;}else{digitalWrite(5,LOW); switch36=0;}}
   
-  if(serialData.toInt()==16){if(switch2==0){digitalWrite(27,HIGH); switch2=1;}else{digitalWrite(27,LOW); switch2=0;}}      
-  
-  if(serialData.toInt()==15){if(switch3==0){digitalWrite(24,HIGH); switch3=1;}else{digitalWrite(24,LOW); switch3=0;}}      
-  
-  if(serialData.toInt()==14){if(switch4==0){digitalWrite(25,HIGH); switch4=1;}else{digitalWrite(25,LOW); switch4=0;}}      
-  
-  if(serialData.toInt()==13){if(switch5==0){digitalWrite(22,HIGH); switch5=1;}else{digitalWrite(22,LOW); switch5=0;}}      
-  
-  if(serialData.toInt()==12){if(switch6==0){digitalWrite(23,HIGH); switch6=1;}else{digitalWrite(23,LOW); switch6=0;}}      
-  
-  if(serialData.toInt()==21){if(switch7==0){digitalWrite(32,HIGH); switch7=1;}else{digitalWrite(32,LOW); switch7=0;}}      
-  
-  if(serialData.toInt()==26){if(switch8==0){digitalWrite(33,HIGH); switch8=1;}else{digitalWrite(33,LOW); switch8=0;}}      
-  
-  if(serialData.toInt()==25){if(switch9==0){digitalWrite(30,HIGH); switch9=1;}else{digitalWrite(30,LOW); switch9=0;}}      
-  
-  if(serialData.toInt()==24){if(switch10==0){digitalWrite(31,HIGH); switch10=1;}else{digitalWrite(31,LOW); switch10=0;}}  
-  
-  if(serialData.toInt()==23){if(switch11==0){digitalWrite(28,HIGH); switch11=1;}else{digitalWrite(28,LOW); switch11=0;}}  
-  
-  if(serialData.toInt()==22){if(switch12==0){digitalWrite(29,HIGH); switch12=1;}else{digitalWrite(29,LOW); switch12=0;}}  
-  
-  if(serialData.toInt()==31){if(switch13==0){digitalWrite(38,HIGH); switch13=1;}else{digitalWrite(38,LOW); switch13=0;}}  
-  
-  if(serialData.toInt()==36){if(switch14==0){digitalWrite(39,HIGH); switch14=1;}else{digitalWrite(39,LOW); switch14=0;}}  
-  
-  if(serialData.toInt()==33){if(switch15==0){digitalWrite(34,HIGH); switch15=1;}else{digitalWrite(34,LOW); switch15=0;}}  
-  
-  if(serialData.toInt()==34){if(switch16==0){digitalWrite(37,HIGH); switch16=1;}else{digitalWrite(37,LOW); switch16=0;}}  
-  
-  if(serialData.toInt()==35){if(switch17==0){digitalWrite(36,HIGH); switch17=1;}else{digitalWrite(36,LOW); switch17=0;}}  
-  
-  if(serialData.toInt()==32){if(switch18==0){digitalWrite(35,HIGH); switch18=1;}else{digitalWrite(35,LOW); switch18=0;}}  
-  
-  if(serialData.toInt()==41){if(switch19==0){digitalWrite(44,HIGH); switch19=1;}else{digitalWrite(44,LOW); switch19=0;}}  
-  
-  if(serialData.toInt()==46){if(switch20==0){digitalWrite(45,HIGH); switch20=1;}else{digitalWrite(45,LOW); switch20=0;}}  
-  
-  if(serialData.toInt()==45){if(switch21==0){digitalWrite(42,HIGH); switch21=1;}else{digitalWrite(42,LOW); switch21=0;}}  
-  
-  if(serialData.toInt()==44){if(switch22==0){digitalWrite(43,HIGH); switch22=1;}else{digitalWrite(43,LOW); switch22=0;}}  
-  
-  if(serialData.toInt()==43){if(switch23==0){digitalWrite(40,HIGH); switch23=1;}else{digitalWrite(40,LOW); switch23=0;}}  
-  
-  if(serialData.toInt()==42){if(switch24==0){digitalWrite(41,HIGH); switch24=1;}else{digitalWrite(41,LOW); switch24=0;}}  
-  
-  if(serialData.toInt()==51){if(switch25==0){digitalWrite(50,HIGH); switch25=1;}else{digitalWrite(50,LOW); switch25=0;}}  
-  
-  if(serialData.toInt()==56){if(switch26==0){digitalWrite(51,HIGH); switch26=1;}else{digitalWrite(51,LOW); switch26=0;}}  
-  
-  if(serialData.toInt()==55){if(switch27==0){digitalWrite(48,HIGH); switch27=1;}else{digitalWrite(48,LOW); switch27=0;}}  
-  
-  if(serialData.toInt()==54){if(switch28==0){digitalWrite(49,HIGH); switch28=1;}else{digitalWrite(49,LOW); switch28=0;}}  
-  
-  if(serialData.toInt()==53){if(switch29==0){digitalWrite(46,HIGH); switch29=1;}else{digitalWrite(46,LOW); switch29=0;}}  
-  
-  if(serialData.toInt()==52){if(switch30==0){digitalWrite(47,HIGH); switch30=1;}else{digitalWrite(47,LOW); switch30=0;}}  
-  
-  if(serialData.toInt()==61){if(switch31==0){digitalWrite(4,HIGH); switch31=1;}else{digitalWrite(4,LOW); switch31=0;}}  
-  
-  if(serialData.toInt()==62){if(switch32==0){digitalWrite(9,HIGH); switch32=1;}else{digitalWrite(9,LOW); switch32=0;}}  
-  
-  if(serialData.toInt()==63){if(switch33==0){digitalWrite(8,HIGH); switch33=1;}else{digitalWrite(8,LOW); switch33=0;}}    
-  
-  if(serialData.toInt()==64){if(switch34==0){digitalWrite(7,HIGH); switch34=1;}else{digitalWrite(8,LOW); switch34=0;}}    
-  
-  if(serialData.toInt()==65){if(switch35==0){digitalWrite(6,HIGH); switch35=1;}else{digitalWrite(6,LOW); switch35=0;}}    
-  
-  if(serialData.toInt()==66){if(switch36==0){digitalWrite(5,HIGH); switch36=1;}else{digitalWrite(5,LOW); switch36=0;}}
-
-  if(serialData.toInt()==99){
-    switch1, switch2, switch3, switch4, switch5, switch6, switch7, switch8, switch9, switch10, switch11, switch12, switch13, switch14, switch15, switch16, 
-    switch17, switch18, switch19, switch20, switch21, switch22, switch23, switch24, switch25, switch26, switch27, switch28, switch29, switch30, switch31, switch32, switch33, switch34, switch35, switch36=0;
-    uint8_t ledpins[36]={22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 2, 3, 4, 5};
-    for (uint8_t i = 0; i < 36; i++) { //for each pin
-      digitalWrite(ledpins[i], LOW); 
-    }
-    Serial.println(1);
-  }  
+    if(serialData.toInt()==99){
+      switch1, switch2, switch3, switch4, switch5, switch6, switch7, switch8, switch9, switch10, switch11, switch12, switch13, switch14, switch15, switch16, 
+      switch17, switch18, switch19, switch20, switch21, switch22, switch23, switch24, switch25, switch26, switch27, switch28, switch29, switch30, switch31, switch32, switch33, switch34, switch35, switch36=0;
+      uint8_t ledpins[36]={22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 2, 3, 4, 5};
+      for (uint8_t i = 0; i < 36; i++) { //for each pin
+        digitalWrite(ledpins[i], LOW); 
+      }
+    }  
   }
+}
