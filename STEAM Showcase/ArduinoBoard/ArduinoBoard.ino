@@ -1,7 +1,7 @@
 String serialData;
 
 void setup(){
-  Serial.begin(9600);
+  Serial.begin(115200);
   pinMode(9, OUTPUT);
   pinMode(6, OUTPUT);
   pinMode(4, OUTPUT);
@@ -130,4 +130,6 @@ void serialEvent() {
     for (uint8_t i = 0; i < 36; i++) { //for each pin
       digitalWrite(ledpins[i], LOW); 
     }
-  }  }
+    Serial.println(1);
+  }  
+  }
