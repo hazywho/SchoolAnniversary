@@ -5,8 +5,7 @@ Servo servo2;
 String serialData;
 
 void setup(){
-  Serial.begin(9600);
-  Serial.setTimeout(10);
+  Serial.begin(115200);
   servo1.attach(9);
   servo2.attach(10);
 }
@@ -28,5 +27,5 @@ int parseX(String data) {
 
 int parseY(String data) {
   data.remove(0, data.indexOf("Y") + 1);
-  return data.toInt();
+  return data   .toInt();
 }
