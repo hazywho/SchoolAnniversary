@@ -16,7 +16,7 @@ void loop()
 
 void serialEvent() {
   serialData = Serial.readString();
-  servo1.write(parseX( serialData));
+  servo1.write(parseX(serialData));
   servo2.write(parseY(serialData));
 }
 

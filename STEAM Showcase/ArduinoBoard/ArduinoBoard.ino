@@ -46,43 +46,8 @@ void loop()
     serialEvent();   
   }
 }
-int switch1=0; 
-int switch2=0; 
-int switch3=0;
-int switch4=0; 
-int switch5=0; 
-int switch6=0; 
-int switch7=0; 
-int switch8=0; 
-int switch9=0; 
-int switch10=0; 
-int switch11=0;
-int switch12=0;  
-int switch13=0; 
-int switch14=0; 
-int switch15=0; 
-int switch16=0; 
-int switch17=0; 
-int switch18=0; 
-int switch19=0; 
-int switch20=0; 
-int switch21=0; 
-int switch22=0; 
-int switch23=0; 
-int switch24=0; 
-int switch25=0; 
-int switch26=0;
-int switch27=0; 
-int switch28=0; 
-int switch29=0; 
-int switch30=0; 
-int switch31=0; 
-int switch32=0; 
-int switch33=0; 
-int switch34=0; 
-int switch35=0; 
-int switch36=0; 
-
+int switch1, switch2, switch3, switch4, switch5, switch6, switch7, switch8, switch9, switch10, switch11, switch12, switch13, switch14, switch15, switch16, 
+switch17, switch18, switch19, switch20, switch21, switch22, switch23, switch24, switch25, switch26, switch27, switch28, switch29, switch30, switch31, switch32, switch33, switch34, switch35, switch36 = 0;
 
 void serialEvent() {
   serialData = Serial.readString();
@@ -159,6 +124,10 @@ void serialEvent() {
   if(serialData.toInt()==66){if(switch36==0){digitalWrite(5,HIGH); switch36=1;}else{digitalWrite(5,LOW); switch36=0;}}
 
   if(serialData.toInt()==99){
-    digitalWrite(,LOW)
-  }
-  }
+    switch1, switch2, switch3, switch4, switch5, switch6, switch7, switch8, switch9, switch10, switch11, switch12, switch13, switch14, switch15, switch16, 
+    switch17, switch18, switch19, switch20, switch21, switch22, switch23, switch24, switch25, switch26, switch27, switch28, switch29, switch30, switch31, switch32, switch33, switch34, switch35, switch36=0;
+    uint8_t ledpins[36]={22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 2, 3, 4, 5};
+    for (uint8_t i = 0; i < 36; i++) { //for each pin
+      digitalWrite(ledpins[i], LOW); 
+    }
+  }  }

@@ -6,16 +6,16 @@ import serial
 global mouseX,mouseY
 mouseX, mouseY=(0, 0)
 arduino = serial.Serial('COM3', 9600)
-# arduinoMega = serial.Serial('COM4', 9600) #arduino mega communication
+arduinoMega = serial.Serial('COM11', 9600) #arduino mega communication
 def write(mouseX,mouseY):
     resolution = (120,120)
-    print(mouseX/resolution[0]*180)
+    print(180-(mouseX/(120+resolution[0])*180))
     print(mouseY/resolution[1]*180)
-    arduino.write(str(f"X{mouseX/resolution[1]*180}Y{mouseY/resolution[0]*180}").encode()) #set resolution
+    arduino.write(str(f"X{180-(mouseX/resolution[1]*180)}Y{mouseY/resolution[0]*180}").encode()) #set resolution
 
 def writeCoordsIntoMega(x,y):
     print(f"{y}{x}")
-    arduino.write(f"{y}{x}".encode()) 
+    arduinoMega.write(f"{y}{x}".encode()) 
 
 #setup board
 board_size_cm = 120
@@ -97,6 +97,7 @@ def check_level():
 
 # Function to show a percentage of buttons
 def show_buttons(percentage):
+    writeCoordsIntoMega(x=9,y=9)
     num_buttons_to_show = int(len(buttons) * percentage)
     random_buttons = random.sample(buttons, num_buttons_to_show)
     for button, pos, state in buttons:
@@ -104,6 +105,9 @@ def show_buttons(percentage):
         buttons[buttons.index((button, pos, state))] = (button, pos, False)
     for button, pos, state in random_buttons:
         button.set_facecolor('red')
+        sendX=int(((pos[0]-10)/20)+1)
+        sendY=int((6-(((pos[1]-10)/20)+1))+1)
+        writeCoordsIntoMega(x=sendX,y=sendY)
         buttons[buttons.index((button, pos, state))] = (button, pos, True)
     fig.canvas.draw_idle()
 
