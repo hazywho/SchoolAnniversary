@@ -5,7 +5,7 @@ import time
 global mouseX,mouseY
 mouseX, mouseY=(0, 0)
 #setup arduino
-board = pyfirmata.Arduino('COM3') #change to uno com
+board = pyfirmata.Arduino('COM11') #change to uno com
 pin=9
 pin2=10
 it2 = pyfirmata.util.Iterator(board=board)
@@ -50,8 +50,3 @@ def writeCoordsIntoMega(xy):
         elif coords == 99:
             
             reset_all_switches()
-
-writeCoordsIntoMega("9956226334325414")
-print(switches)
-time.sleep(5)
-writeCoordsIntoMega("9956226334325414")
